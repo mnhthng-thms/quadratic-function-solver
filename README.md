@@ -14,5 +14,5 @@ Accessible at: https://mnhthng-thms.github.io/quadratic-function-solver/
 
 ## Dependencies
 
-- MaterializeCSS
-- KaTeX from Khan Academy
+- [MaterializeCSS](https://github.com/Dogfalo/materialize)
+- [KaTeX from Khan Academy](https://github.com/KaTeX/KaTeX)
