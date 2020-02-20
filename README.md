@@ -1,6 +1,7 @@
 # quadratic-function-solver
 
 A simple web page demonstration of Quadratic Function Solver using HTML, CSS and JS.
+Accessible at: https://mnhthng-thms.github.io/quadratic-function-solver/index
 
 ![screenshot](https://raw.githubusercontent.com/mnhthng-thms/quadratic-function-solver/master/_screenshots/screenshot-0.png)
 
