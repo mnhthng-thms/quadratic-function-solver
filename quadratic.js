@@ -39,7 +39,7 @@ var quadratic = function (...params) {
 
   const showRoots = function () {
     if (a == 0) {
-      if (b == 0) {
+      if (b === 0) {
         return (c == 0) ? true : false;
       }
       else {
@@ -54,8 +54,8 @@ var quadratic = function (...params) {
         return [-b / (2 * a)];
       }
       else {
-        return [-(b + deltaValue) / (2 * a),
-        -(b - deltaValue) / (2 * a)];
+        return [-(b + Math.sqrt(deltaValue)) / (2 * a),
+        -(b - Math.sqrt(deltaValue)) / (2 * a)];
       }
     }
   }
@@ -74,6 +74,7 @@ var quadratic = function (...params) {
   }
 
   return {
+    isQuad: !(a === 0),
     delta: () => deltaValue,
     showRoots,
     getNumberOfRoots

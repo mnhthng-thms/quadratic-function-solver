@@ -162,10 +162,14 @@
 			console.dir(sanitise("-4.5asf4"));
 
 			var renderer = function (quadFuncClosure) {
+				const isThisQuad = quadFuncClosure.isQuad; 
+
 				const renderedRoots = (function () {
 					const numOfRoots = quadFuncClosure.getNumberOfRoots();
+					console.dir(quadFuncClosure); 
 					const roots = quadFuncClosure.showRoots();
-					const FORMULAR_LATEX = '\\{ \\frac{-b \\pm \\sqrt{\\Delta}}{2a} \\} =';
+					const FORMULA_ISQUAD = '\\{ \\frac{-b \\pm \\sqrt{\\Delta}}{2a} \\} =';
+					const FORMULA_NOTISQUAD = '\\{ \\frac{-c}{b} \\} =';
 
 					if (numOfRoots === 'infinite') {
 						return `\R`; 
@@ -174,10 +178,10 @@
 						return `Ø`; 
 					} 
 					else if (numOfRoots === 1) {
-						return `${FORMULAR_LATEX} \\{${roots[0]} \\}`; 
+						return (isThisQuad) ? `${FORMULA_ISQUAD} \\{${roots[0]} \\}` : `${FORMULA_NOTISQUAD} \\{${roots[0]} \\}`; 
 					} 
 					else if (numOfRoots === 2) {
-						return ` ${FORMULAR_LATEX} \\{${roots[0]}, ${roots[1]}\\}`; 
+						return ` ${FORMULA_ISQUAD} \\{${roots[0]}, ${roots[1]}\\}`; 
 					}
 				})();
 				
@@ -190,7 +194,7 @@
 					}
 				})();
 
-				const renderedDelta = `${quadFuncClosure.delta()}`; 
+				const renderedDelta = (isThisQuad) ? `${quadFuncClosure.delta()}` : ''; 
 
 				return {
 					renderedDelta,
@@ -219,9 +223,6 @@
 				
 				const thisQuadFunc = quadratic(...coefficients);
 				const thisRenderer = renderer(thisQuadFunc); 
-				console.dir(thisRenderer.renderedDelta); 
-				console.dir(thisRenderer.renderedRoots); 
-				console.dir(thisQuadFunc.renderNumOfRoots);
 
 				katex.render(thisRenderer.renderedDelta, deltaResDom, {throwOnError: false});
 				katex.render(thisRenderer.renderedRoots, rootsResDom, {throwOnError: false});
