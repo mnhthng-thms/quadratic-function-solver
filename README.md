@@ -2,6 +2,8 @@
 
 A simple web page demonstration of Quadratic Function Solver using HTML, CSS and JS.
 
+![screenshot](https://raw.githubusercontent.com/mnhthng-thms/quadratic-function-solver/master/_screenshots/screenshot-0.png)
+
 ## Features & Specs
 
 - 'Sanitise' user input: wipe out invalid characters and convert input to number.
