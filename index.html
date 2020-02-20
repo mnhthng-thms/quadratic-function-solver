@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link
+			rel="stylesheet"
+			href="./assets/vendor/materialize/materialize.min.css"
+		/>
+		<script src="./assets/vendor/materialize/materialize.min.js"></script>
+		<link rel="stylesheet" href="./assets/vendor/katex/katex.min.css">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="./assets/vendor/katex/katex.min.js"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="./assets/vendor/katex/auto-render.min.js" 
+				onload="renderMathInElement(document.body);"
+		></script>
+		<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Indie+Flower&display=swap" rel="stylesheet">
+		<style>
+		 .code-snippet-wrapper {
+			 position: relative;
+			 overflow-y: scroll;
+			 overflow-x: hidden;
+			 max-height: 85vh;
+		 }
+		 .feature-container {
+			 padding-left: 15px;
+			 padding-right: 15px;
+			 overflow-y: hidden;
+		 }
+		 .logo-container {
+			 padding-left: 15px;
+		 }
+		 .brand-logo {
+			 font-family: 'Dancing Script', cursive;
+		 }
+		 nav ul a {
+			 font-family: 'Indie Flower', cursive;
+			 font-size: 18px; 
+		 }
+		 #instruction-container {
+			font-family: 'Indie Flower', cursive;
+			font-size: 18px;
+		 }
+		 table {
+			 font-family: 'Indie Flower', cursive;
+			 font-size: 14px; 
+		 }
+		 pre {
+			 font-size: 12px; 
+		 }
+		</style>
+  </head>
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="content-wrapper">
+			<div class="row nav-outbound-wrapper">
+				<nav class="deep-purple lighten-1">
+					<div class="nav-wrapper">
+						<div class="logo-container">
+							<a href="" class="brand-logo">Δ Quadratic Function Solver Δ</a>
+						</div>
+						<ul id="nav-mobile" class="right hide-on-med-and-down">
+							<li><a href="https://github.com/mnhthng-thms">
+								<img src="./assets/imgs/GitHub-Mark-Light-32px.png" alt="github-icon" height="15px" width="15px"/>
+								MinhTu Thomas Hoang
+							</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="row valign-wrapper main-content-wrapper">
+				<div class="col s8">
+					<div class="row" id="instruction-wrapper">
+						<span style="font-size: large;">$$ax^2 + bx + c = 0$$</span>
+						<div class="container" id="instruction-container">
+							<span class="center-align">Type in anything you want, these fields know how to 'understand' your input :></span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="container" id="form-wrapper">
+							<form class="row" action="">
+								<div class="input-field col s4">
+									<label for="input-a">Value for \(a\)</label>
+									<input type="text" id="input-a" autofocus />
+								</div>
+								<div class="input-field col s4">
+									<label for="input-b">Value for \(b\)</label>
+									<input type="text" id="input-b" autofocus />
+								</div>
+								<div class="input-field col s4">
+									<label for="input-c">Value for \(c\)</label>
+									<input type="text" id="input-c" autofocus />
+								</div>
+								<button
+									class="btn waves-effect waves-light float-right purple darken-2"
+									type="submit"
+									name="action"
+									style="float:right"
+								>
+									Solve it
+								</button>
+							</form>
+						</div>
+					</div>
+					<div class="row">
+						<div class="feature-container" id="results-wrapper">	
+							<table class="highlight responsive-table">
+								<thead>
+									<tr>
+											<th></th> 
+											<th>Results</th>
+											<th>Explanation</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><b>Delta</b></td>
+										<td>
+											\(\Delta = b^2 - 4ac = \)
+											<span id="delta-result"></span>
+										</td>
+										<td id="explain-delta-wrapper"></td>
+									</tr>
+									<tr>
+										<td><b>Set of Solution</b></td>
+										<td>
+											\(S = \)
+											<span id="roots-result"></span>
+										</td>
+										<td id="explain-roots-wrapper"></td=>
+									</tr>
+									<tr>
+										<td><b>Number of Roots</b></td>
+										<td>
+											<span id="number-roots-result"></span>
+										</td>
+										<td id="explain-num-of-roots-wrapper"></td>
+									</td>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col s4 code-snippet-wrapper">
+					<div class="row">
+						<script src="https://gist.github.com/mnhthng-thms/f8382558bbd5f6bdf0910b0e4c158da3.js"></script>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="./quadratic.js"></script>
+		<script>
+			console.dir(sanitise("-4.5asf4"));
+
+			var renderer = function (quadFuncClosure) {
+				const renderedRoots = (function () {
+					const numOfRoots = quadFuncClosure.getNumberOfRoots();
+					const roots = quadFuncClosure.showRoots();
+					const FORMULAR_LATEX = '\\{ \\frac{-b \\pm \\sqrt{\\Delta}}{2a} \\} =';
+
+					if (numOfRoots === 'infinite') {
+						return `\R`; 
+					} 
+					else if (numOfRoots === 0) {
+						return `Ø`; 
+					} 
+					else if (numOfRoots === 1) {
+						return `${FORMULAR_LATEX} \\{${roots[0]} \\}`; 
+					} 
+					else if (numOfRoots === 2) {
+						return ` ${FORMULAR_LATEX} \\{${roots[0]}, ${roots[1]}\\}`; 
+					}
+				})();
+				
+				const renderedNumOfRoots = (function (){
+					const numOfRoots = quadFuncClosure.getNumberOfRoots(); 
+					if (numOfRoots === 'infinite') {
+						return `∞`;
+					} else {
+						return `${numOfRoots}`;
+					}
+				})();
+
+				const renderedDelta = `${quadFuncClosure.delta()}`; 
+
+				return {
+					renderedDelta,
+					renderedRoots, 
+					renderedNumOfRoots
+				}
+			}; 
+
+			var thisForm = document.forms[0];
+			var thisButton = thisForm[3];
+			var rootsResDom = document.getElementById("roots-result");
+			var deltaResDom = document.getElementById("delta-result");
+			var numOfRootsResDom = document.getElementById("number-roots-result"); 
+
+			thisButton.addEventListener("click", function(event) {
+				event.preventDefault();
+
+				const coefficients = [0, 1, 2].map(count => {
+					const sanitiser = sanitise(thisForm[count].value); 
+					// an unharmful side effect to display notification
+					M.toast({html: sanitiser.messageToUser});
+					return sanitiser.returnedFloat; 
+				});
+				coefficients.forEach((cur, idx) => (thisForm[idx].value = cur));
+				listOfCoefs = `${coefficients[0]},${coefficients[1]},${coefficients[2]}`; 
+				
+				const thisQuadFunc = quadratic(...coefficients);
+				const thisRenderer = renderer(thisQuadFunc); 
+				console.dir(thisRenderer.renderedDelta); 
+				console.dir(thisRenderer.renderedRoots); 
+				console.dir(thisQuadFunc.renderNumOfRoots);
+
+				katex.render(thisRenderer.renderedDelta, deltaResDom, {throwOnError: false});
+				katex.render(thisRenderer.renderedRoots, rootsResDom, {throwOnError: false});
+				katex.render(thisRenderer.renderedNumOfRoots, numOfRootsResDom, {throwOnError: false});
+
+				document.getElementById('explain-delta-wrapper').innerHTML = `<pre>quadratic(${listOfCoefs}).delta()<pre>`;
+				document.getElementById('explain-roots-wrapper').innerHTML = `<pre>quadratic(${listOfCoefs}).showRoots()<pre>`; 
+				document.getElementById('explain-num-of-roots-wrapper').innerHTML = `<pre>quadratic(${listOfCoefs}).getNumOfRoots()<pre>`; 
+			});
+		</script>
+		<!--Vendor JS scripts-->
+		<script href="./prism.js"></script>
+	</body>
+</html>
